@@ -53,11 +53,11 @@ class client_xmpp(sleekxmpp.ClientXMPP):
 
     try:
       resp.send(now = True)
-      logging.info("se borro la cuenta %s" % self.boundjid)
+      logging.info("Erased account %s" % self.boundjid)
     except IqError as e:
-      print("Algo salio mal")
+      print("Something went wrong")
     except IqTimeout:
-      print("No hay respuesta del server")
+      print("No response from server")
   
   async def register(self, iq):
     resp = self.Iq()
@@ -75,12 +75,12 @@ class client_xmpp(sleekxmpp.ClientXMPP):
 
 #//////////////////////////////////////////////////////////////////////////////
 def menu():
-  print("\nSeleccione una opcion: ")
-  print("1. Mostrar todos los usuarios")
-  print("2. Agregar amigo")
+  print("\nChoose an option: ")
+  print("1. Show friends")
+  print("2. Add friend")
   print("3. Chat 1v1")
-  print("4. Borrar cuenta")
-  print("5. Salir\n")
+  print("4. Erase account")
+  print("5. Log out\n")
 
 
 # Main Method
@@ -130,13 +130,13 @@ if __name__ == "__main__":
       if resp == '1':
         xmpp.lista()
       elif resp == '2':
-        amigo = input('Usuario: ') + '@alumchat.xyz'
+        amigo = input('User: ') + '@alumchat.xyz'
         xmpp.send_presence_subscription(pto = amigo,
                                         ptype='subscribe'
                                         )
       elif resp == '3':
-        to = input("A quien: ")
-        body = input("mensaje: ")
+        to = input("To : ")
+        body = input("Message: ")
         xmpp.tosend(to, body)
       elif resp == '4':
         xmpp.delete_account()
@@ -144,5 +144,5 @@ if __name__ == "__main__":
         xmpp.salir()
         break
   else:
-    print("No conecta")
+    print("Can't connect")
   pass
